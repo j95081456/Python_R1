@@ -2,13 +2,29 @@
 ### boundary detection         ###
 ### bug: output highlight file ###
 
+def replace_failed_with_zero(input_file_path, output_file_path):
+    """
+    Replace all occurrences of the string 'failed' with '0' in the given file.
+    """
+    with open(input_file_path, 'r') as file:
+        lines = file.readlines()
+
+    # Replace 'failed' with '0'
+    updated_lines = [line.replace("failed", "0") for line in lines]
+
+    # Write the updated content back to the file
+    with open(output_file_path, 'w') as file:
+        file.writelines(updated_lines)
+
 threshold = 400e-12  # Define the threshold value
 
 # File paths
 input_file = '/home/m111/m111061571/hspice/slicer_compare/result_all_corner/slicer_tr.mt0'
+cleaned_input_file = '/home/m111/m111061571/hspice/slicer_compare/result_all_corner/slicer_tr_cleaned.mt0'
 output_file = '/home/m111/m111061571/hspice/slicer_compare/result_all_corner/slicer_tr_highlighted.txt'
+replace_failed_with_zero(input_file, cleaned_input_file)
 # Read the file
-with open(input_file, 'r') as file:
+with open(cleaned_input_file, 'r') as file:
     lines = file.readlines()
 
 # Parse and process the data
