@@ -1,6 +1,7 @@
 ### slicer window sweep        ###
 ### boundary detection         ###
 ### bug: output highlight file ###
+import sys
 
 def replace_failed_with_zero(input_file_path, output_file_path):
     """
@@ -16,16 +17,22 @@ def replace_failed_with_zero(input_file_path, output_file_path):
     with open(output_file_path, 'w') as file:
         file.writelines(updated_lines)
 
-threshold = 400e-12  # Define the threshold value
+# Check if the user provided a file name
+if len(sys.argv) < 4:
+    print("Usage: python script_name.py <input_file> <cleaned_input_file> <output_file>")
+    sys.exit(1)
 
-# File paths
-input_file = '/home/m111/m111061571/hspice/slicer_compare/result_all_corner/slicer_tr.mt0'
-cleaned_input_file = '/home/m111/m111061571/hspice/slicer_compare/result_all_corner/slicer_tr_cleaned.mt0'
-output_file = '/home/m111/m111061571/hspice/slicer_compare/result_all_corner/slicer_tr_highlighted.txt'
+# Get the file name from command-line arguments
+input_file         = sys.argv[1]
+cleaned_input_file = sys.argv[2]
+output_file        = sys.argv[3]
+
 replace_failed_with_zero(input_file, cleaned_input_file)
 # Read the file
 with open(cleaned_input_file, 'r') as file:
     lines = file.readlines()
+
+threshold = 400e-12  # Define the threshold value
 
 # Parse and process the data
 highlighted_rows = []
